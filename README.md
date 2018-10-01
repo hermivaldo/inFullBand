@@ -1,3 +1,7 @@
+# ATENÇÃO.
+
+Esse pacote foi modificado para um trabalho de IOT, desconsiderar qualquer tipo de informação, a descrição do projeto original permanece, pois não tenho costume de remover algo que não foi criação minha. Trata-se de uma modificação para uso Acadêmico.
+
 # inFullBand iOS app
 
 ## General information
