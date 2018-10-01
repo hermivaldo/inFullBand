@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CD7945D76E712548701C6886 /* Pods_inFullBand.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13CE484A35BACE20A2BAB228 /* Pods_inFullBand.framework */; };
 		D08AF1F41FC433720009A7AF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AF1F31FC433720009A7AF /* AppDelegate.swift */; };
 		D08AF1F61FC433720009A7AF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D08AF1F51FC433720009A7AF /* ViewController.swift */; };
 		D08AF1F91FC433720009A7AF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D08AF1F71FC433720009A7AF /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		13CE484A35BACE20A2BAB228 /* Pods_inFullBand.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_inFullBand.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D08AF1F01FC433720009A7AF /* inFullBand.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = inFullBand.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D08AF1F31FC433720009A7AF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D08AF1F51FC433720009A7AF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -43,6 +45,8 @@
 		D0FEE6C01FCD9F1B0015EFEA /* CoreBluetooth+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoreBluetooth+Extensions.swift"; sourceTree = "<group>"; };
 		D0FEE6C21FCD9F490015EFEA /* Array+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extensions.swift"; sourceTree = "<group>"; };
 		D0FEE6C41FCDA00C0015EFEA /* MiBandConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiBandConstants.swift; sourceTree = "<group>"; };
+		E28B0A5060539034DC210459 /* Pods-inFullBand.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inFullBand.debug.xcconfig"; path = "Pods/Target Support Files/Pods-inFullBand/Pods-inFullBand.debug.xcconfig"; sourceTree = "<group>"; };
+		F3A4A2ED7353CE0A29939770 /* Pods-inFullBand.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-inFullBand.release.xcconfig"; path = "Pods/Target Support Files/Pods-inFullBand/Pods-inFullBand.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -50,18 +54,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD7945D76E712548701C6886 /* Pods_inFullBand.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1765BB767452178BBEBED63C /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				E28B0A5060539034DC210459 /* Pods-inFullBand.debug.xcconfig */,
+				F3A4A2ED7353CE0A29939770 /* Pods-inFullBand.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		D08AF1E71FC433720009A7AF = {
 			isa = PBXGroup;
 			children = (
 				D08AF1F21FC433720009A7AF /* inFullBand */,
 				D08AF1F11FC433720009A7AF /* Products */,
 				D08AF2051FC435430009A7AF /* Frameworks */,
+				1765BB767452178BBEBED63C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -90,6 +105,7 @@
 			isa = PBXGroup;
 			children = (
 				D08AF2061FC435430009A7AF /* CoreBluetooth.framework */,
+				13CE484A35BACE20A2BAB228 /* Pods_inFullBand.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -143,9 +159,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = D08AF2021FC433720009A7AF /* Build configuration list for PBXNativeTarget "inFullBand" */;
 			buildPhases = (
+				AD0331F8ADE4B056AB62B269 /* [CP] Check Pods Manifest.lock */,
 				D08AF1EC1FC433720009A7AF /* Sources */,
 				D08AF1ED1FC433720009A7AF /* Frameworks */,
 				D08AF1EE1FC433720009A7AF /* Resources */,
+				A9EF97EF5B91211C86561C19 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -163,7 +181,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0910;
-				LastUpgradeCheck = 0910;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Mikołaj Chmielewski";
 				TargetAttributes = {
 					D08AF1EF1FC433720009A7AF = {
@@ -202,6 +220,45 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		A9EF97EF5B91211C86561C19 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${SRCROOT}/Pods/Target Support Files/Pods-inFullBand/Pods-inFullBand-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/MQTTClient/MQTTClient.framework",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MQTTClient.framework",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-inFullBand/Pods-inFullBand-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		AD0331F8ADE4B056AB62B269 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-inFullBand-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		D08AF1EC1FC433720009A7AF /* Sources */ = {
@@ -259,6 +316,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -266,6 +324,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -316,6 +375,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -323,6 +383,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -354,15 +415,16 @@
 		};
 		D08AF2031FC433720009A7AF /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = E28B0A5060539034DC210459 /* Pods-inFullBand.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V5T4VNV573;
+				DEVELOPMENT_TEAM = 6A223KBZV7;
 				INFOPLIST_FILE = "$(SRCROOT)/inFullBand/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.infullmobile.infullband;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.hermivaldo.fork.infullband;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;
@@ -372,15 +434,16 @@
 		};
 		D08AF2041FC433720009A7AF /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F3A4A2ED7353CE0A29939770 /* Pods-inFullBand.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = V5T4VNV573;
+				DEVELOPMENT_TEAM = 6A223KBZV7;
 				INFOPLIST_FILE = "$(SRCROOT)/inFullBand/Resources/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.infullmobile.infullband;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.hermivaldo.fork.infullband;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.0;

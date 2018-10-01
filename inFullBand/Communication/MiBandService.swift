@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreBluetooth
+import MQTTClient
 
 class MiBandService: NSObject {
 
@@ -21,7 +22,8 @@ class MiBandService: NSObject {
     private var externalLog: LoggerFuction
     private var externalSpecialLog: LoggerFuction
     private lazy var manager = CBCentralManager(delegate: self, queue: DispatchQueue.main, options: nil)
-
+    let mqSESSION = MQTTSession()
+    
     private var miBand: CBPeripheral? {
         didSet {
             oldValue?.delegate = nil
@@ -43,6 +45,17 @@ class MiBandService: NSObject {
         self.externalSpecialLog = specialLog
         super.init()
         _ = manager
+        
+       
+        let transport = MQTTCFSocketTransport()
+        transport.host = "test.mosquitto.org"
+        transport.port = 1883
+        
+        mqSESSION?.transport = transport
+       
+        mqSESSION?.connect()
+        
+        
     }
 
     // MARK: - Actions
@@ -63,6 +76,7 @@ class MiBandService: NSObject {
         manager.cancelPeripheralConnection(miBand)
     }
 
+    
     func updateStats() {
         guard let miBand = miBand else {
             errorLog("Update: Mi Band not discovered!")
@@ -79,6 +93,8 @@ class MiBandService: NSObject {
             errorLog("Start: Invalid setup!")
             return
         }
+        print("mais ou menos aqui")
+        print(hrControlPoint.uuid)
         miBand.writeValue(Data(bytes: MiCommand.startHeartRateMonitoring), for: hrControlPoint, type: .withResponse)
         log("❤️", "Start monitoring")
     }
@@ -121,27 +137,32 @@ class MiBandService: NSObject {
     }
 
     func unsetAlert() {
-        guard let miBand = miBand, let alertCharacteristic = alertCharacteristic else {
-            errorLog("Unset alert: Invalid setup!")
-            return
-        }
-        miBand.writeValue(Data(bytes: [AlertMode.off]), for: alertCharacteristic, type: .withoutResponse)
-        log("❕", "Alert Off")
+        mqSESSION?.subscribe(toTopic: "tmp_alerta", at: MQTTQosLevel.atLeastOnce, subscribeHandler: {error, ok in
+            if ((error) != nil){
+                print("falha ao conectar")
+            }else{
+                self.log("🔝", "Estamos conectado na fila TMP_ALERTA")
+            }
+        })
+        mqSESSION?.delegate = self
     }
 
     // MARK: - Handling
 
     func handleCharacteristicValueUpdate(characteristicID: MiCharacteristicID, valueBytes: [UInt8]) {
-
+        print(characteristicID)
         switch characteristicID {
         case .dateTime:
             guard let dateString = DateComponents.from(bytes: Array(valueBytes[0...6]))?.simpleDescription else { return }
             log("⏰", "Time:", "\(dateString)")
 
         case .heartRateMeasurement:
-            let heartRate = valueBytes[1]
+            let heartRate = String(valueBytes[1])
+            let valor = heartRate.data(using: .utf8)
+            
+            mqSESSION?.publishData(valor, onTopic: "tmp_hermivaldo", retain: false, qos: .atMostOnce)
             log("❤️", "Heart rate:", "\(heartRate) BPM")
-
+            
         case .activity:
             guard let stepsCount = UInt32.from(bytes: Array(valueBytes[1...4])),
                 let meters = UInt32.from(bytes: Array(valueBytes[5...8])),
@@ -156,7 +177,9 @@ class MiBandService: NSObject {
         case .deviceEvent:
             guard valueBytes.count >= 1, valueBytes[0] == DeviceEvent.buttonPressed else { return }
             log("💡", "Button pressed")
-
+            let chamada = "1"
+            let data = chamada.data(using: .utf8)
+            mqSESSION?.publishData(data, onTopic: "tmp_alerta", retain: false, qos: .atMostOnce)
         default:
             break
         }
@@ -175,9 +198,13 @@ extension MiBandService: CBCentralManagerDelegate {
 
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         print(peripheral)
-        specialLog("🌎", "Discovered:", "\(peripheral.realName)")
-
-        discoveredPeripherals.append(peripheral)
+        // mostrar apenas as mi bands
+        if (peripheral.realName.contains("MI")){
+            specialLog("🌎", "Discovered:", "\(peripheral.realName) \(peripheral.identifier)")
+            
+            discoveredPeripherals.append(peripheral)
+            
+        }
     }
 
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
@@ -196,6 +223,17 @@ extension MiBandService: CBCentralManagerDelegate {
         if error == nil {
             self.miBand = nil
         }
+    }
+}
+
+extension MiBandService: MQTTSessionDelegate {
+    func newMessage(_ session: MQTTSession!, data: Data!, onTopic topic: String!, qos: MQTTQosLevel, retained: Bool, mid: UInt32) {
+        self.startMonitoringHeartRate()
+        print(String(data: data, encoding: String.Encoding.utf8)!)
+    }
+    
+    func messageDelivered(_ session: MQTTSession!, msgID: UInt16, topic: String!, data: Data!, qos: MQTTQosLevel, retainFlag: Bool) {
+        print(data)
     }
 }
 
@@ -234,8 +272,9 @@ extension MiBandService: CBPeripheralDelegate {
         }
     }
 
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
-
+    func peripheral(_ peripheral: CBPeripheral,
+                    didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+        
         guard let miCharacteristicID = MiCharacteristicID(rawValue: characteristic.uuid.uuidString),
             updatableIDs.contains(miCharacteristicID) || monitoredIDs.contains(miCharacteristicID) else { return }
 
@@ -251,6 +290,7 @@ extension MiBandService: CBPeripheralDelegate {
 
         self.handleCharacteristicValueUpdate(characteristicID: miCharacteristicID, valueBytes: valueBytes)
     }
+  
 }
 
 extension MiBandService {
